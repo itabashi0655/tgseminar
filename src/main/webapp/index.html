@@ -14,6 +14,36 @@
 
     <script type="text/javascript" src="/scripts/main.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome-ie7.css">
+    <style scoped>
+
+        .pure-button-success,
+        .pure-button-error,
+        .pure-button-warning,
+        .pure-button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .pure-button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .pure-button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .pure-button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .pure-button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
 </head>
 <body>
     <div class="pure-g-r" style="margin:10px">
@@ -28,7 +58,7 @@
                 <input type="radio" name="orderByType" ng-model="order" value="id" checked/>昇順
                 <input type="radio" name="orderByType" ng-model="order" value="-id"/>降順
 
-                <table class="pure-table">
+                <table class="pure-table" style="font-family;Arial">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -42,11 +72,21 @@
                     <tbody>
                         <tr ng-repeat="todo in todos | orderBy:order" ng-controller="TodoItemController">
                             <td>{{todo.id}}</td>
-                            <td><input type="text" ng-model="todo.title"></td>
+                            <td><input type="text" ng-model="todo.title" size="60"></td>
                             <td>{{todo.createdBy}}</td>
                             <td>{{todo.createdAt}}</td>
-                            <td ng-click="remove()"><button class="pure-button" >Delete</button></td>
-                            <td ng-click="modify()"><button class="pure-button" >Modify</button></td>
+                            <td>
+                                <a href="#" class="pure-button pure-button-success" ng-click="remove()">
+                                    <i class="icon-remove-sign"></i>
+                                    <span style="padding-left:5px">Delete</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="pure-button pure-button-warning" ng-click="modify()">
+                                    <i class="icon-th-large"></i>
+                                    <span style="padding-left:5px">Modify</span>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +94,10 @@
                 <div class="pure-control-group">
                     <label for="newContent">追加するタイトル</label>
                     <input type="text" id="newContent" ng-model="newContent">
-                    <button class="pure-button" ng-click="add()">Add</button>
+                    <a href="#" class="pure-button pure-button-secondary" ng-click="add()">
+                        <i class="icon-plus"></i>
+                        <span style="padding-left:5px">Add</span>
+                    </a>
                 </div>
 <!--
         <input type="text" ng-model="targetId">

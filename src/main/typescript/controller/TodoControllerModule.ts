@@ -121,9 +121,9 @@ module Todo{
          * TODOを追加
          */
         add():void{
-//            var todo = new Model.Todo();
-//            todo.content = this.$scope.newContent;
             var content = this.$scope.newContent;
+
+            this.$scope.newContent = '';
 
             this.todoService.post(content)
                 .success((data) => {

@@ -1,6 +1,7 @@
 package tgseminar.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,11 +9,13 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.EntityNotFoundRuntimeException;
+import org.slim3.memcache.Memcache;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -79,6 +82,17 @@ public class UpdateController extends Controller {
 //		entity.setProperty("createdBy", currentUser.getEmail());
 		entity.setProperty("title", title);
 		Datastore.put(entity);
+
+		List<Entity> entities
+			= Datastore.query("ToDo")
+				.filter("createdBy", FilterOperator.EQUAL, entity.getProperty("createdBy"))
+				.sort("createdAt", SortDirection.DESCENDING)
+				.asList();
+
+		// Put entities to Memcache.
+		// Memcache expire 60sec.
+		Memcache.put(entity.getProperty("createdBy"), entities, 
+			Expiration.byDeltaSeconds(60));
 
 		response.setStatus(HttpServletResponse.SC_OK);
 		return null;
