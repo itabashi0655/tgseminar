@@ -18,4 +18,27 @@ module Model {
 			this.test = data.test;
 		}
 	}
+
+    /**                      ｆ
+     * TODOを表すモデルクラス
+     */
+    export class Todo {
+        // properties.
+        public id:number;
+        public createdAt:string;
+        public createdBy:string;
+        public content:string;
+
+        // constructor
+        constructor(
+            id:number=-1,
+            content:string = "unknown",
+            createdAt:string = "unknown",
+            createdBy:string = "unknown"){
+            this.id = id;
+            this.content = content;
+            this.createdAt = createdAt;
+            this.createdBy = createdBy;
+        }
+    }
 }

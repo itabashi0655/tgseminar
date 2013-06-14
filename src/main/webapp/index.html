@@ -13,9 +13,51 @@
     <![endif]-->
 
     <script type="text/javascript" src="/scripts/main.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
 </head>
 <body>
+    <div class="pure-g-r" style="margin:10px">
+        <div class="pure-u" ng-controller="TodoController">
+            <form class="pure-form">
+                <h2>Hello!! My TODO</h2>
+                <input type="radio" name="orderByType" ng-model="order" value="id" checked/>昇順
+                <input type="radio" name="orderByType" ng-model="order" value="-id"/>降順
 
+                <table class="pure-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Created By</th>
+                            <th>Created At</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="todo in todos | orderBy:order" ng-controller="TodoItemController">
+                            <td>{{todo.id}}</td>
+                            <td><input type="text" ng-model="todo.title"></td>
+                            <td>{{todo.createdBy}}</td>
+                            <td>{{todo.createdAt}}</td>
+                            <td ng-click="remove()"><button class="pure-button" >Delete</button></td>
+                            <td ng-click="modify()"><button class="pure-button" disabled>Modify</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="pure-control-group">
+                    <label for="newContent">追加するタイトル</label>
+                    <input type="text" id="newContent" ng-model="newContent">
+                    <button class="pure-button" ng-click="add()">Add</button>
+                </div>
+<!--
+        <input type="text" ng-model="targetId">
+        <button ng-click="modify()">更新する</button>
+-->
+            </form>
+        </div>
+<!--
 <div ng-view>
 </div>
 
@@ -32,6 +74,7 @@
         <a ng-href="/sample">サンプル</a>
     </p>
 </script>
-
+-->
+    </div>
 </body>
 </html>
