@@ -30,7 +30,7 @@ module Todo{
          * @param $scope
          * @param todoService
          */
-        constructor(public $scope:Scope, private todoService:Service.TodoService){
+        constructor(public $scope:Scope, public $window:ng.IWindowService, private todoService:Service.TodoService){
             this.$scope.remove = () =>
                 this.remove();
             this.$scope.modify = () =>
@@ -70,10 +70,10 @@ module Todo{
                     // TODOのリストを再取得する
                     // $scopeを介さないとだめ？
                     this.$scope.list();
-                    alert("remove completed.");
+                    this.$window.alert("remove completed.");
                 })
                 .error((data) => {
-                    alert("remove failed.");
+                    this.$window.alert("remove failed.");
                 })
         }
     }
@@ -83,7 +83,7 @@ module Todo{
      */
     export class Controller {
 
-         constructor(public $scope:Scope, private todoService:Service.TodoService){
+         constructor(public $scope:Scope, public $window:ng.IWindowService, private todoService:Service.TodoService){
 
             // $scopeに対して自分自身の情報を設定してやる
             this.list();
@@ -104,6 +104,10 @@ module Todo{
             this.todoService.list()
                 .success((todos) => {
                     this.$scope.todos = [];
+                    if(todos == 'undefined')
+                        return;
+                    if(!Array.isArray(todos))
+                        return;
                     todos.forEach((todo) => {
                         console.log(todo.title);
                         var newTodo = new Model.Todo();

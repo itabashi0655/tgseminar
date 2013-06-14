@@ -18,8 +18,13 @@
 <body>
     <div class="pure-g-r" style="margin:10px">
         <div class="pure-u" ng-controller="TodoController">
-            <form class="pure-form">
+            <div ng-show="todos.length == 0" style="display:none">
+                <h2>TODO is nothing!!</h2>
+            </div>
+            <div ng-show="todos.length > 0" style="display:none">
                 <h2>Hello!! My TODO</h2>
+            </div>
+            <form class="pure-form">
                 <input type="radio" name="orderByType" ng-model="order" value="id" checked/>昇順
                 <input type="radio" name="orderByType" ng-model="order" value="-id"/>降順
 

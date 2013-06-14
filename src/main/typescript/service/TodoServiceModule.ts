@@ -15,7 +15,7 @@ module Service {
 
         post(title:string):ng.IHttpPromise {
             return this.$http({
-                    method: "POST" ,
+                    method: "GET" ,
                     url: "/Post?title=" + title
                 });
             //return this.$http.get("");
@@ -23,14 +23,14 @@ module Service {
 
         remove(id:number):ng.IHttpPromise {
             return this.$http({
-                method: "POST" ,
+                method: "GET" ,
                 url: "/Delete?id=" + id
             });
         }
 
         list():ng.IHttpPromise {
             return this.$http({
-                method: "POST" ,
+                method: "GET" ,
                 url: "/List"
             });
         }
