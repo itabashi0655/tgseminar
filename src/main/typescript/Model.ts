@@ -27,18 +27,14 @@ module Model {
         public id:number;
         public createdAt:string;
         public createdBy:string;
-        public content:string;
+        public title:string;
 
         // constructor
-        constructor(
-            id:number=-1,
-            content:string = "unknown",
-            createdAt:string = "unknown",
-            createdBy:string = "unknown"){
-            this.id = id;
-            this.content = content;
-            this.createdAt = createdAt;
-            this.createdBy = createdBy;
+        constructor(data:any){
+            this.id = data.id;
+            this.title = data.title;
+            this.createdAt = data.createdAt;
+            this.createdBy = data.createdBy;
         }
     }
 }

@@ -42,17 +42,17 @@ module Todo{
          */
         modify():void{
             var id = this.$scope.todo.id;
-/*
+            var title = this.$scope.todo.title;
+
             // execute modify.
-            this.$scope.todoService
-                .post(id)
+            this.todoService
+                .modify(id, title)
                 .success(function(data){
-                    alert("remove completed.");
+                    alert("modify completed.");
                 })
                 .error(function(data){
-                    alert("remove failed.");
+                    alert("modify failed.");
                 })
-*/
         }
 
         /**
@@ -93,6 +93,12 @@ module Todo{
             this.$scope.list = ()
                 => this.list();
 /*
+             this.todoService.list()
+                 .success((todos:Model.Todo[])=>{
+                    this.$scope.todos = todos;
+                 });
+*/
+/*
             this.$scope.modify = ()
                 => this.modify();
             this.$scope.remove = ()
@@ -101,20 +107,12 @@ module Todo{
         }
 
         list():void{
-            this.todoService.list()
-                .success((todos) => {
+            this.todoService.getTodos()
+                .success((todos:Model.Todo[]) => {
                     this.$scope.todos = [];
-                    if(todos == 'undefined')
-                        return;
                     if(!Array.isArray(todos))
                         return;
                     todos.forEach((todo) => {
-                        console.log(todo.title);
-                        var newTodo = new Model.Todo();
-                        newTodo.id = todo.id;
-                        newTodo.content = todo.title;
-                        newTodo.createdAt = todo.createdAt;
-                        newTodo.createdBy = todo.createdBy;
                         this.$scope.todos.push(todo);
                     })
                 })

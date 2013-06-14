@@ -28,11 +28,32 @@ module Service {
             });
         }
 
-        list():ng.IHttpPromise {
-            return this.$http({
-                method: "GET" ,
-                url: "/List"
-            });
+        modify(id:number, title:string):ng.IHttpPromise {
+            return this.$http.get("/Update?id=" + id.toString() + "&title=" + title);
+        }
+
+        getTodos():ng.IHttpPromise {
+            var promise:ng.IHttpPromise= this.$http.get("/List");
+
+            // 既存のIHttPromiseでTodo[]を扱えるように拡張する
+            var wrapped:ng.IHttpPromise = {
+                // successの部分で取り扱うdataは、デフォルトではanyなので
+                // Todo[]が扱えるようにする
+                // dataをTodo[]に変換してから、もらったコールバックに変換したTodo[]をわたす
+                // そのほかの処理は既存のpromiseと同じにする
+                success: (callback) => {
+                    promise.success((data, status, headers, config ) => {
+                        var todos:Model.Todo[] = [];
+                        data.forEach((todo) => {
+                            todos.push(new Model.Todo(todo));
+                        });
+                        callback(todos, status, headers, config);
+                    });
+                },
+                error: promise.error,
+                then: promise.then
+            }
+            return wrapped;
         }
     }
 }

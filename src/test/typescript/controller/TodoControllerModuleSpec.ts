@@ -27,25 +27,18 @@ describe("Controllerの", () => {
         it("Controllerの作成", () => {
 
             console.log('Case 1');
-            $httpBackend.expect('GET', '/List',new RegExp('\\[.+\\]'))
-                .respond((method, url, data, header)=>{
-
-                });
-
+            $httpBackend.expect('GET', '/List').respond(200, [{"id": 1, "title": "test", "createdAt":"aaa", "createdBy":"ccc"}]);
             var controller:Todo.Controller = $controller(Todo.Controller, {
                 $scope: $scope
             }) ;
             $httpBackend.flush();
-//            console.log('end expectPOST')
 
             expect($scope.todos.length).toBe(1);
 
             console.log('Case 2');
-            $httpBackend.expect('GET', '/Post?title=晩御飯たべる',null)
-                .respond(201);
+            $httpBackend.expect('GET', '/Post?title=晩御飯たべる').respond(201,[]);
 
-            $httpBackend.expect('GET', '/List', new RegExp('\\[.+\\]'))
-                .respond(201, new RegExp('\\[.+\\]'), '');
+            $httpBackend.expect('GET', '/List').respond(201, [{"id": 1, "title": "晩御飯たべる", "createdAt":"aaa", "createdBy":"ccc"}]);
 /*
             $httpBackend.expect('GET', '/List',
                     angular.toJson(
@@ -70,7 +63,7 @@ describe("Controllerの", () => {
             $httpBackend.flush();
 
             expect($scope.todos.length).toBe(1);
-            expect($scope.todos[0].content).toBe("晩御飯たべる");
+            expect($scope.todos[0].title).toBe("晩御飯たべる");
         });
 
     });
